@@ -11,7 +11,7 @@ default['android-sdk']['setup_root']     = '/Users/ken/local' # ark defaults (/u
 default['android-sdk']['version']        = '22.0.5'
 default['android-sdk']['checksum']       = 'b664d1024b6fcf897e05eb1674c998df0ed2e4c9c280469445d914f8fcfa4454'
 
-default['android-sdk']['download_url']   = "http://dl.google.com/android/android-sdk_r#{node['android-sdk']['version']}-linux.tgz"
+default['android-sdk']['download_url']   = "http://dl.google.com/android/android-sdk_r#{node['android-sdk']['version']}-macosx.zip"
 
 # List of Android SDK components to preinstall:
 default['android-sdk']['components']     = %w(platform-tools build-tools-18.0.1 android-18 sysimg-18 android-17 sysimg-17 android-16 sysimg-16 extra-android-support extra-google-google_play_services extra-google-m2repository extra-android-m2repository)
