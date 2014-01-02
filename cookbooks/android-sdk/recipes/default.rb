@@ -68,11 +68,12 @@ end
 #
 # Fix non-friendly 0750 permissions in order to make android-sdk available to all system users
 #
-%w{ add-ons platforms tools }.each do |subfolder|
-  directory File.join(android_home, subfolder) do
-    mode 0755
-  end
-end
+#%w{ add-ons platforms tools }.each do |subfolder|
+#  directory File.join(android_home, subfolder) do
+#    mode 0755
+#  end
+#end
+
 # TODO find a way to handle 'chmod stuff' below with own chef resource (idempotence stuff...)
 execute 'Grant all users to read android files' do
   command       "chmod -R a+r #{android_home}/*"
@@ -88,18 +89,17 @@ end
 execute 'Install Android SDK platforms and tools' do
   environment   ({ 'ANDROID_HOME' => android_home })
   path          [File.join(android_home, 'tools')]
-  #TODO: use --force or not?
-  command       "echo y | #{android_bin} update sdk --no-ui --filter #{node['android-sdk']['components'].join(',')}"
+  command       "echo y | #{android_bin} update sdk --no-ui --filter #{node['android-sdk']['components'].join(',')} --force"
   user          node['android-sdk']['owner']
   group         node['android-sdk']['group']
 end
 
-template "/etc/profile.d/#{node['android-sdk']['name']}.sh"  do
-  source "android-sdk.sh.erb"
-  mode   0644
-  owner  node['android-sdk']['owner']
-  group  node['android-sdk']['group']
-  variables(
-    :android_home => android_home
-  )
-end
+#template "/etc/profile.d/#{node['android-sdk']['name']}.sh"  do
+#  source "android-sdk.sh.erb"
+#  mode   0644
+#  owner  node['android-sdk']['owner']
+#  group  node['android-sdk']['group']
+#  variables(
+#    :android_home => android_home
+#  )
+#end
